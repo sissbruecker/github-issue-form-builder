@@ -1,5 +1,4 @@
 import '@vaadin/dialog';
-import { DialogOpenedChangedEvent } from '@vaadin/dialog';
 import '@vaadin/button';
 import { css, html, LitElement, render } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
@@ -28,9 +27,11 @@ export class ConfirmDialog {
       dialog.opened = false;
     };
 
-    const openedChangedHandler = (event: DialogOpenedChangedEvent) => {
-      if (!event.detail.value && !isConfirmed) {
-        if (options.onCancel) options.onCancel();
+    const openedChangedHandler = () => {
+      if (dialog.opened) return;
+
+      if (!isConfirmed && options.onCancel) {
+        options.onCancel();
       }
       document.body.removeChild(dialog);
     };
@@ -50,8 +51,8 @@ export class ConfirmDialog {
     dialog.setAttribute('theme', 'no-padding');
     dialog.addEventListener('opened-changed', openedChangedHandler);
 
-    document.body.appendChild(dialog);
     dialog.opened = true;
+    document.body.appendChild(dialog);
   }
 }
 
