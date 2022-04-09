@@ -1,4 +1,4 @@
-import { html } from 'lit';
+import { css, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import '@vaadin/text-area';
 import { MobxLitElement } from '@adobe/lit-mobx';
@@ -11,11 +11,18 @@ import { TextAreaChangeEvent } from '@vaadin/text-area';
 import '@vaadin/details';
 import { TextAreaField } from './model.js';
 import './FieldEditor.js';
-import {fieldEditorStyles} from './FieldEditor.js';
+import { fieldEditorStyles } from './FieldEditor.js';
 
 @customElement('fb-textarea-field-editor')
 export class TextAreaFieldEditor extends MobxLitElement {
-  static styles = fieldEditorStyles;
+  static styles = [
+    fieldEditorStyles,
+    css`
+      :host {
+        display: block;
+      }
+    `,
+  ];
 
   @property({ attribute: false })
   field!: TextAreaField;

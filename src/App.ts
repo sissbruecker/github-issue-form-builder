@@ -11,15 +11,12 @@ export class App extends LitElement {
     lumoStyles,
     css`
       :host {
-        display: flex;
-        flex-direction: column;
-        height: 100%;
+        display: block;
         background: var(--lumo-contrast-20pct);
         padding: var(--lumo-space-l);
       }
 
       header {
-        flex: 0 0 auto;
         margin-bottom: var(--lumo-space-l);
       }
 
@@ -28,10 +25,6 @@ export class App extends LitElement {
         padding: 0;
         font-size: var(--lumo-font-size-xxl);
         text-shadow: 1px 1px 1px #ffffff;
-      }
-
-      main {
-        flex: 1 1 0;
       }
     `,
   ];
