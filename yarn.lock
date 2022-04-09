@@ -1685,6 +1685,19 @@
     "@vaadin/vaadin-material-styles" "^23.0.5"
     "@vaadin/vaadin-themable-mixin" "^23.0.5"
 
+"@vaadin/dialog@^23.0.5":
+  version "23.0.5"
+  resolved "https://registry.yarnpkg.com/@vaadin/dialog/-/dialog-23.0.5.tgz#4ba443c5d0554598e74c168ab517188b13a0e646"
+  integrity sha512-KAzbmqkXMNsAf7w2YBQXO9oJLiwP3xZXI6972sLopKe39MQOpzyRsMps3OLDlqpFCPvU/0i9gtr5mgDL0ZENMw==
+  dependencies:
+    "@open-wc/dedupe-mixin" "^1.3.0"
+    "@polymer/polymer" "^3.0.0"
+    "@vaadin/component-base" "^23.0.5"
+    "@vaadin/vaadin-lumo-styles" "^23.0.5"
+    "@vaadin/vaadin-material-styles" "^23.0.5"
+    "@vaadin/vaadin-overlay" "^23.0.5"
+    "@vaadin/vaadin-themable-mixin" "^23.0.5"
+
 "@vaadin/field-base@^23.0.5":
   version "23.0.5"
   resolved "https://registry.yarnpkg.com/@vaadin/field-base/-/field-base-23.0.5.tgz#0bd41fb32d77f40f922ce4a8bf7e7d5b1cf89498"

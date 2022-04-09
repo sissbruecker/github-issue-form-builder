@@ -6,6 +6,7 @@ import { autorun } from 'mobx';
 import { MenuBarItem, MenuBarItemSelectedEvent } from '@vaadin/menu-bar';
 import '@vaadin/menu-bar';
 import { Notification } from '@vaadin/notification';
+import '@vaadin/button';
 import {
   createConfiguration,
   createField,
@@ -15,6 +16,7 @@ import {
 } from './model.js';
 import { loadLastConfiguration, saveLastConfiguration } from './storage.js';
 import './TextAreaFieldEditor.js';
+import { ConfirmDialog } from './components/ConfirmDialog.js';
 
 interface FieldMenuItem extends MenuBarItem {
   type: FieldType;
@@ -76,6 +78,19 @@ export class Editor extends MobxLitElement {
     this.configuration.fields.push(field);
   }
 
+  onReset() {
+    ConfirmDialog.show({
+      title: 'Reset Configuration',
+      message: 'Do you really want to reset the configuration?',
+      confirmButtonTheme: 'primary error',
+      cancelButtonTheme: 'tertiary',
+      onConfirm: () => {
+        this.configuration = createConfiguration();
+        saveLastConfiguration(this.configuration);
+      },
+    });
+  }
+
   render() {
     return html`
       <div class="toolbar">
@@ -84,6 +99,7 @@ export class Editor extends MobxLitElement {
           .items=${this.toolbarItems}
           @item-selected=${this.onAddField}
         ></vaadin-menu-bar>
+        <vaadin-button @click=${this.onReset}>Reset</vaadin-button>
       </div>
       <div class="fields">
         ${repeat(

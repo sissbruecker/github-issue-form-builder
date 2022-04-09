@@ -16,8 +16,10 @@
   },
   "dependencies": {
     "@adobe/lit-mobx": "^2.0.0",
+    "@vaadin/button": "^23.0.5",
     "@vaadin/checkbox": "^23.0.5",
     "@vaadin/details": "^23.0.5",
+    "@vaadin/dialog": "^23.0.5",
     "@vaadin/menu-bar": "^23.0.5",
     "@vaadin/notification": "^23.0.5",
     "@vaadin/split-layout": "^23.0.5",

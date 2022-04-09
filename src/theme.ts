@@ -2,6 +2,9 @@ import { css } from "lit";
 import {registerStyles} from '@vaadin/vaadin-themable-mixin/register-styles';
 
 registerStyles('vaadin-menu-bar', css`
+  :host {
+    display: inline-block;
+  }
   :host(.dropdown) vaadin-menu-bar-button {
     border-radius: var(--lumo-border-radius-m);
   }

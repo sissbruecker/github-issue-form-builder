@@ -14,6 +14,7 @@ export class App extends LitElement {
         display: block;
         background: var(--lumo-contrast-20pct);
         padding: var(--lumo-space-l);
+        box-sizing: border-box;
       }
 
       header {
