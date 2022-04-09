@@ -12,9 +12,11 @@ import {
   createField,
   Field,
   FieldType,
+  MarkdownField,
   TextAreaField,
 } from './model.js';
 import { loadLastConfiguration, saveLastConfiguration } from './storage.js';
+import './MarkdownFieldEditor.js';
 import './TextAreaFieldEditor.js';
 import { ConfirmDialog } from './components/ConfirmDialog.js';
 
@@ -47,7 +49,7 @@ export class Editor extends MobxLitElement {
       text: 'Add',
       theme: 'primary',
       children: [
-        { text: 'Markdown' },
+        { text: 'Markdown', type: FieldType.Markdown },
         { text: 'Input' },
         { text: 'TextArea', type: FieldType.TextArea },
         { text: 'Checkbox' },
@@ -113,6 +115,12 @@ export class Editor extends MobxLitElement {
 
   static renderField(field: Field) {
     switch (field.type) {
+      case FieldType.Markdown: {
+        const markdownField = field as MarkdownField;
+        return html`<fb-markdown-field-editor
+          .field=${markdownField}
+        ></fb-textarea-field-editor>`;
+      }
       case FieldType.TextArea: {
         const textAreaField = field as TextAreaField;
         return html`<fb-textarea-field-editor

@@ -9,26 +9,30 @@ function getNextFieldId() {
 
 // eslint-disable-next-line no-shadow
 export enum FieldType {
-  TextArea = 'textArea',
-}
-
-interface CommonFieldAttributes {
-  label: string;
-  description: string;
+  Markdown = 'markdown',
+  TextArea = 'textarea',
 }
 
 export interface Field {
   id: string;
   type: FieldType;
-  attributes: CommonFieldAttributes;
+  attributes: {};
+}
+
+export interface MarkdownField extends Field {
+  type: FieldType.Markdown;
+
+  attributes: {
+    value: string;
+  };
 }
 
 export interface TextAreaField extends Field {
-  id: string;
-
   type: FieldType.TextArea;
 
-  attributes: CommonFieldAttributes & {
+  attributes: {
+    label: string;
+    description: string;
     value: string;
     placeholder: string;
   };
@@ -43,13 +47,23 @@ export interface Configuration {
 }
 
 export function createConfiguration(): Configuration {
-    return makeAutoObservable({
-        fields: []
-    });
+  return makeAutoObservable({
+    fields: [],
+  });
 }
 
 export function createField(type: FieldType) {
   switch (type) {
+    case FieldType.Markdown: {
+      const markdownField: MarkdownField = makeAutoObservable({
+        id: getNextFieldId(),
+        type: FieldType.Markdown,
+        attributes: {
+          value: '',
+        },
+      });
+      return markdownField;
+    }
     case FieldType.TextArea: {
       const textAreaField: TextAreaField = makeAutoObservable({
         id: getNextFieldId(),
