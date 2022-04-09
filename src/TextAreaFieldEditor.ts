@@ -1,4 +1,4 @@
-import { css, html } from 'lit';
+import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import '@vaadin/text-area';
 import { MobxLitElement } from '@adobe/lit-mobx';
@@ -10,60 +10,21 @@ import { TextFieldValueChangedEvent } from '@vaadin/text-field';
 import { TextAreaChangeEvent } from '@vaadin/text-area';
 import '@vaadin/details';
 import { TextAreaField } from './model.js';
+import './FieldEditor.js';
+import {fieldEditorStyles} from './FieldEditor.js';
 
-@customElement('fb-textarea-field')
+@customElement('fb-textarea-field-editor')
 export class TextAreaFieldEditor extends MobxLitElement {
-  static styles = css`
-    :host {
-      display: flex;
-      background: var(--lumo-base-color);
-      border-radius: var(--lumo-border-radius-l);
-      box-shadow: var(--lumo-box-shadow-s);
-    }
-
-    .header {
-      font-weight: bold;
-    }
-
-    .edit-pane {
-      flex: 1 1 50%;
-      padding: var(--lumo-space-m);
-    }
-
-    .preview-pane {
-      flex: 1 1 50%;
-      padding: var(--lumo-space-m);
-      background: var(--lumo-contrast-5pct);
-      border-left: solid 1px var(--lumo-contrast-5pct)
-    }
-
-    vaadin-text-area,
-    vaadin-text-field {
-      width: 100%;
-    }
-
-    .preview-title {
-      font-size: var(--lumo-font-size-xl);
-      font-weight: bold;
-    }
-
-    .preview-title-required-indicator {
-      color: var(--lumo-error-text-color);
-    }
-
-    .preview-description {
-      font-size: var(--lumo-font-size-s);
-      color: var(--lumo-secondary-text-color);
-    }
-  `;
+  static styles = fieldEditorStyles;
 
   @property({ attribute: false })
   field!: TextAreaField;
 
   render() {
     return html`
-        <div class="edit-pane">
-        <div class="header">TextArea</div>
+      <fb-field-editor>
+        <span slot="header">TextArea</span>
+        <div slot="editor">
           <vaadin-text-field
             label="Label"
             .value=${this.field.attributes.label}
@@ -108,7 +69,7 @@ export class TextAreaFieldEditor extends MobxLitElement {
             ></vaadin-text-area>
           </vaadin-details>
         </div>
-        <div class="preview-pane">
+        <div slot="preview">
           <div class="preview-title">
             <span>${this.field.attributes.label}</span>
             ${this.field.validations.required
@@ -127,6 +88,7 @@ export class TextAreaFieldEditor extends MobxLitElement {
             ></vaadin-text-area>
           </div>
         </div>
+      </fb-field-editor>
     `;
   }
 }

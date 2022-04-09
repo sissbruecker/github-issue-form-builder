@@ -40,7 +40,7 @@ export class Editor extends LitElement {
     <vaadin-menu-bar class="dropdown" .items=${this.toolbarItems}></vaadin-menu-bar>
     </div>
     <div class="fields">
-    <fb-textarea-field .field=${new TextAreaField()}></fb-textarea-field>
+    <fb-textarea-field-editor .field=${new TextAreaField()}></fb-textarea-field-editor>
     </div>
       
     `;
