@@ -2,9 +2,18 @@ import { css, html } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import { repeat } from 'lit/directives/repeat.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
+import { autorun } from 'mobx';
 import { MenuBarItem, MenuBarItemSelectedEvent } from '@vaadin/menu-bar';
 import '@vaadin/menu-bar';
-import { Configuration, Field, FieldType, TextAreaField } from './model.js';
+import { Notification } from '@vaadin/notification';
+import {
+  createConfiguration,
+  createField,
+  Field,
+  FieldType,
+  TextAreaField,
+} from './model.js';
+import { loadLastConfiguration, saveLastConfiguration } from './storage.js';
 import './TextAreaFieldEditor.js';
 
 interface FieldMenuItem extends MenuBarItem {
@@ -45,20 +54,26 @@ export class Editor extends MobxLitElement {
   ];
 
   @state()
-  configuration = new Configuration();
+  configuration = createConfiguration();
+
+  protected firstUpdated(): void {
+    const restoredConfiguration = loadLastConfiguration();
+
+    if (restoredConfiguration) {
+      this.configuration = restoredConfiguration;
+      Notification.show('Restored configuration', { position: 'top-end' });
+    }
+
+    // Save configuration on updates
+    autorun(() => {
+      saveLastConfiguration(this.configuration);
+    });
+  }
 
   onAddField(event: MenuBarItemSelectedEvent) {
     const fieldMenuitem = event.detail.value as FieldMenuItem;
-
-    switch (fieldMenuitem.type) {
-      case FieldType.TextArea: {
-        const field = new TextAreaField();
-        this.configuration.fields.push(field);
-        break;
-      }
-      default:
-        throw new Error(`Unexpected field type: ${fieldMenuitem.type}`);
-    }
+    const field = createField(fieldMenuitem.type);
+    this.configuration.fields.push(field);
   }
 
   render() {

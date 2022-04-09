@@ -19,6 +19,7 @@
     "@vaadin/checkbox": "^23.0.5",
     "@vaadin/details": "^23.0.5",
     "@vaadin/menu-bar": "^23.0.5",
+    "@vaadin/notification": "^23.0.5",
     "@vaadin/split-layout": "^23.0.5",
     "@vaadin/text-area": "^23.0.5",
     "@vaadin/text-field": "^23.0.5",
@@ -65,6 +66,7 @@
     ],
     "rules": {
       "no-unused-vars": "off",
+      "consistent-return": "off",
       "import/no-duplicates": "off",
       "import/no-extraneous-dependencies": "off",
       "max-classes-per-file": "off",

@@ -23,10 +23,10 @@ export interface Field {
   attributes: CommonFieldAttributes;
 }
 
-export class TextAreaField implements Field {
+export interface TextAreaField extends Field {
   id: string;
 
-  type = FieldType.TextArea;
+  type: FieldType.TextArea;
 
   attributes: CommonFieldAttributes & {
     value: string;
@@ -36,24 +36,35 @@ export class TextAreaField implements Field {
   validations: {
     required: boolean;
   };
-
-  constructor() {
-    this.id = getNextFieldId();
-    this.attributes = {
-      label: 'Text area',
-      description: '',
-      value: '',
-      placeholder: '',
-    };
-    this.validations = { required: false };
-    makeAutoObservable(this);
-  }
 }
 
-export class Configuration {
-  fields: Field[] = [];
+export interface Configuration {
+  fields: Field[];
+}
 
-  constructor() {
-    makeAutoObservable(this);
+export function createConfiguration(): Configuration {
+    return makeAutoObservable({
+        fields: []
+    });
+}
+
+export function createField(type: FieldType) {
+  switch (type) {
+    case FieldType.TextArea: {
+      const textAreaField: TextAreaField = makeAutoObservable({
+        id: getNextFieldId(),
+        type: FieldType.TextArea,
+        attributes: {
+          label: 'Text area',
+          description: '',
+          value: '',
+          placeholder: '',
+        },
+        validations: { required: false },
+      });
+      return textAreaField;
+    }
+    default:
+      throw new Error(`Unexpected field type: ${type}`);
   }
 }

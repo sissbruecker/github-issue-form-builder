@@ -1756,6 +1756,18 @@
     "@vaadin/vaadin-material-styles" "^23.0.5"
     "@vaadin/vaadin-themable-mixin" "^23.0.5"
 
+"@vaadin/notification@^23.0.5":
+  version "23.0.5"
+  resolved "https://registry.yarnpkg.com/@vaadin/notification/-/notification-23.0.5.tgz#900b9a6e9d1819aa9d52d677be09bf4706010d0b"
+  integrity sha512-Ms2bY9QaMHdRfq6Ea+mCk1mgNK/T837TXXuqsjNYMf2L4bX0sGqtu1I926xm9Xf+cN++B1IR3TIdCljccwosZg==
+  dependencies:
+    "@polymer/polymer" "^3.0.0"
+    "@vaadin/component-base" "^23.0.5"
+    "@vaadin/vaadin-lumo-styles" "^23.0.5"
+    "@vaadin/vaadin-material-styles" "^23.0.5"
+    "@vaadin/vaadin-themable-mixin" "^23.0.5"
+    lit "^2.0.0"
+
 "@vaadin/split-layout@^23.0.5":
   version "23.0.5"
   resolved "https://registry.yarnpkg.com/@vaadin/split-layout/-/split-layout-23.0.5.tgz#ad8a02d17abf2ba2f3e2141148551f4e89e13508"
