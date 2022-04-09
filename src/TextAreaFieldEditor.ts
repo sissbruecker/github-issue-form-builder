@@ -1,5 +1,7 @@
 import { css, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import '@vaadin/button';
+import '@vaadin/icon';
 import '@vaadin/text-area';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import '@vaadin/checkbox';
@@ -29,8 +31,8 @@ export class TextAreaFieldEditor extends MobxLitElement {
 
   render() {
     return html`
-      <fb-field-editor>
-        <span slot="header">TextArea</span>
+      <fb-field-editor .field=${this.field}>
+        <span slot="header">Textarea</span>
         <div slot="editor">
           <vaadin-text-field
             label="Label"

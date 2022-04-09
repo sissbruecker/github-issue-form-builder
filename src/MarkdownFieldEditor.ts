@@ -27,7 +27,7 @@ export class MarkdownFieldEditor extends MobxLitElement {
 
   render() {
     return html`
-      <fb-field-editor>
+      <fb-field-editor .field=${this.field}>
         <span slot="header">Markdown</span>
         <div slot="editor">
           <vaadin-text-area

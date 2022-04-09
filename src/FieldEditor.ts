@@ -1,27 +1,30 @@
 import { css, html } from 'lit';
-import { customElement } from 'lit/decorators.js';
+import { customElement, property } from 'lit/decorators.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
+import { Field } from './model.js';
+
+export interface FieldEditorEvent extends CustomEvent<{ field: Field }> {}
 
 // Reusable styles for all field editors
 export const fieldEditorStyles = css`
-    vaadin-text-area,
-    vaadin-text-field {
-      width: 100%;
-    }
+  vaadin-text-area,
+  vaadin-text-field {
+    width: 100%;
+  }
 
-    .preview-title {
-      font-size: var(--lumo-font-size-xl);
-      font-weight: bold;
-    }
+  .preview-title {
+    font-size: var(--lumo-font-size-xl);
+    font-weight: bold;
+  }
 
-    .preview-title-required-indicator {
-      color: var(--lumo-error-text-color);
-    }
+  .preview-title-required-indicator {
+    color: var(--lumo-error-text-color);
+  }
 
-    .preview-description {
-      font-size: var(--lumo-font-size-s);
-      color: var(--lumo-secondary-text-color);
-    }
+  .preview-description {
+    font-size: var(--lumo-font-size-s);
+    color: var(--lumo-secondary-text-color);
+  }
 `;
 
 @customElement('fb-field-editor')
@@ -35,7 +38,18 @@ export class FieldEditor extends MobxLitElement {
     }
 
     .header {
+      display: flex;
+      align-items: baseline;
+    }
+    .header-content {
       font-weight: bold;
+      margin-right: auto;
+    }
+    .header vaadin-button {
+      visibility: hidden;
+    }
+    :host(:hover) .header vaadin-button {
+      visibility: visible;
     }
 
     .edit-pane {
@@ -51,11 +65,55 @@ export class FieldEditor extends MobxLitElement {
     }
   `;
 
+  @property({ attribute: false })
+  field!: Field;
+
+  onMoveUp() {
+    this.dispatchEvent(
+      new CustomEvent('field-editor-move-up', {
+        bubbles: true,
+        composed: true,
+        detail: { field: this.field },
+      })
+    );
+  }
+
+  onMoveDown() {
+    this.dispatchEvent(
+      new CustomEvent('field-editor-move-down', {
+        bubbles: true,
+        composed: true,
+        detail: { field: this.field },
+      })
+    );
+  }
+
+  onRemove() {
+    this.dispatchEvent(
+      new CustomEvent('field-editor-remove', {
+        bubbles: true,
+        composed: true,
+        detail: { field: this.field },
+      })
+    );
+  }
+
   render() {
     return html`
       <div class="edit-pane">
         <div class="header">
-          <slot name="header"></slot>
+          <div class="header-content">
+            <slot name="header"></slot>
+          </div>
+          <vaadin-button theme="tertiary icon" @click=${this.onMoveUp}>
+            <vaadin-icon icon="lumo:arrow-up"></vaadin-icon>
+          </vaadin-button>
+          <vaadin-button theme="tertiary icon" @click=${this.onMoveDown}>
+            <vaadin-icon icon="lumo:arrow-down"></vaadin-icon>
+          </vaadin-button>
+          <vaadin-button theme="tertiary icon error" @click=${this.onRemove}>
+            <vaadin-icon icon="lumo:cross"></vaadin-icon>
+          </vaadin-button>
         </div>
         <slot name="editor"></slot>
       </div>

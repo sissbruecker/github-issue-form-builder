@@ -1,12 +1,5 @@
 import { makeAutoObservable } from 'mobx';
 
-let nextFieldId = 0;
-
-function getNextFieldId() {
-  nextFieldId += 1;
-  return nextFieldId.toString();
-}
-
 // eslint-disable-next-line no-shadow
 export enum FieldType {
   Markdown = 'markdown',
@@ -14,7 +7,7 @@ export enum FieldType {
 }
 
 export interface Field {
-  id: string;
+  id: number;
   type: FieldType;
   attributes: {};
 }
@@ -46,17 +39,23 @@ export interface Configuration {
   fields: Field[];
 }
 
+function getNextFieldId(configuration: Configuration) {
+  const maxId = Math.max(0, ...configuration.fields.map(field => field.id));
+
+  return maxId + 1;
+}
+
 export function createConfiguration(): Configuration {
   return makeAutoObservable({
     fields: [],
   });
 }
 
-export function createField(type: FieldType) {
+export function createField(configuration: Configuration, type: FieldType) {
   switch (type) {
     case FieldType.Markdown: {
       const markdownField: MarkdownField = makeAutoObservable({
-        id: getNextFieldId(),
+        id: getNextFieldId(configuration),
         type: FieldType.Markdown,
         attributes: {
           value: '',
@@ -66,7 +65,7 @@ export function createField(type: FieldType) {
     }
     case FieldType.TextArea: {
       const textAreaField: TextAreaField = makeAutoObservable({
-        id: getNextFieldId(),
+        id: getNextFieldId(configuration),
         type: FieldType.TextArea,
         attributes: {
           label: 'Text area',

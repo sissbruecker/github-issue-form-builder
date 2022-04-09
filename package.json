@@ -20,6 +20,7 @@
     "@vaadin/checkbox": "^23.0.5",
     "@vaadin/details": "^23.0.5",
     "@vaadin/dialog": "^23.0.5",
+    "@vaadin/icon": "^23.0.5",
     "@vaadin/menu-bar": "^23.0.5",
     "@vaadin/notification": "^23.0.5",
     "@vaadin/split-layout": "^23.0.5",
