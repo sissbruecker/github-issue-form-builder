@@ -2,7 +2,7 @@ import { css, html } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import { repeat } from 'lit/directives/repeat.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
-import { action, autorun } from 'mobx';
+import { autorun, runInAction } from 'mobx';
 import { MenuBarItem, MenuBarItemSelectedEvent } from '@vaadin/menu-bar';
 import '@vaadin/menu-bar';
 import { Notification } from '@vaadin/notification';
@@ -76,10 +76,12 @@ export class Editor extends MobxLitElement {
   }
 
   onAddField(event: MenuBarItemSelectedEvent) {
-    const fieldMenuitem = event.detail.value as FieldMenuItem;
-    const field = createField(this.configuration, fieldMenuitem.type);
-    this.configuration.fields.push(field);
-    this.scrollToField(field);
+    runInAction(() => {
+      const fieldMenuitem = event.detail.value as FieldMenuItem;
+      const field = createField(this.configuration, fieldMenuitem.type);
+      this.configuration.fields.push(field);
+      this.scrollToField(field);
+    });
   }
 
   onReset() {
@@ -95,29 +97,32 @@ export class Editor extends MobxLitElement {
     });
   }
 
-  @action.bound
   onFieldEditorMoveUp(e: FieldEditorEvent) {
     const index = this.configuration.fields.indexOf(e.detail.field);
     if (index < 1) return;
-    this.configuration.fields.splice(index, 1);
-    this.configuration.fields.splice(index - 1, 0, e.detail.field);
-    this.scrollToField(e.detail.field);
+    runInAction(() => {
+      this.configuration.fields.splice(index, 1);
+      this.configuration.fields.splice(index - 1, 0, e.detail.field);
+      this.scrollToField(e.detail.field);
+    });
   }
 
-  @action.bound
   onFieldEditorMoveDown(e: FieldEditorEvent) {
     const index = this.configuration.fields.indexOf(e.detail.field);
     if (index < 0 || index > this.configuration.fields.length - 2) return;
-    this.configuration.fields.splice(index, 1);
-    this.configuration.fields.splice(index + 1, 0, e.detail.field);
-    this.scrollToField(e.detail.field);
+    runInAction(() => {
+      this.configuration.fields.splice(index, 1);
+      this.configuration.fields.splice(index + 1, 0, e.detail.field);
+      this.scrollToField(e.detail.field);
+    });
   }
 
-  @action.bound
   onFieldEditorRemove(e: FieldEditorEvent) {
     const index = this.configuration.fields.indexOf(e.detail.field);
     if (index < 0) return;
-    this.configuration.fields.splice(index, 1);
+    runInAction(() => {
+      this.configuration.fields.splice(index, 1);
+    });
   }
 
   scrollToField(field: Field) {
