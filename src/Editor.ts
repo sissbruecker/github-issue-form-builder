@@ -8,6 +8,7 @@ import '@vaadin/menu-bar';
 import { Notification } from '@vaadin/notification';
 import '@vaadin/button';
 import {
+  CheckboxesField,
   createConfiguration,
   createField,
   Field,
@@ -18,6 +19,7 @@ import {
 import { loadLastConfiguration, saveLastConfiguration } from './storage.js';
 import './MarkdownFieldEditor.js';
 import './TextAreaFieldEditor.js';
+import './CheckboxesFieldEditor.js';
 import { ConfirmDialog } from './components/ConfirmDialog.js';
 import { FieldEditorEvent } from './FieldEditor.js';
 
@@ -52,8 +54,8 @@ export class Editor extends MobxLitElement {
       children: [
         { text: 'Markdown', type: FieldType.Markdown },
         { text: 'Input' },
-        { text: 'TextArea', type: FieldType.TextArea },
-        { text: 'Checkbox' },
+        { text: 'Textarea', type: FieldType.TextArea },
+        { text: 'Checkboxes', type: FieldType.Checkboxes },
       ],
     },
   ];
@@ -175,6 +177,16 @@ export class Editor extends MobxLitElement {
           @field-editor-move-down=${this.onFieldEditorMoveDown}
           @field-editor-remove=${this.onFieldEditorRemove}
         ></fb-textarea-field-editor>`;
+      }
+      case FieldType.Checkboxes: {
+        const checkboxesField = field as CheckboxesField;
+        return html`<fb-checkboxes-field-editor
+          .field=${checkboxesField}
+          data-field-id=${field.id}
+          @field-editor-move-up=${this.onFieldEditorMoveUp}
+          @field-editor-move-down=${this.onFieldEditorMoveDown}
+          @field-editor-remove=${this.onFieldEditorRemove}
+        ></fb-checkboxes-field-editor>`;
       }
       default:
         throw new Error(`Unexpected field type: ${field.type}`);

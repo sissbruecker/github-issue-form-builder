@@ -32,6 +32,7 @@ export class MarkdownFieldEditor extends MobxLitElement {
         <div slot="editor">
           <vaadin-text-area
             label="Value"
+            class="width-full"
             .value=${this.field.attributes.value}
             @value-changed=${action((e: TextAreaChangeEvent) => {
               this.field.attributes.value = e.target.value;

@@ -36,6 +36,7 @@ export class TextAreaFieldEditor extends MobxLitElement {
         <div slot="editor">
           <vaadin-text-field
             label="Label"
+            class="width-full"
             .value=${this.field.attributes.label}
             @value-changed=${action((e: TextFieldValueChangedEvent) => {
               this.field.attributes.label = e.detail.value;
@@ -44,6 +45,7 @@ export class TextAreaFieldEditor extends MobxLitElement {
           <br />
           <vaadin-text-field
             label="Description"
+            class="width-full"
             .value=${this.field.attributes.description}
             @value-changed=${action((e: TextFieldValueChangedEvent) => {
               this.field.attributes.description = e.detail.value;
@@ -63,6 +65,7 @@ export class TextAreaFieldEditor extends MobxLitElement {
 
             <vaadin-text-area
               label="Value"
+              class="width-full"
               .value=${this.field.attributes.value}
               @value-changed=${action((e: TextAreaChangeEvent) => {
                 this.field.attributes.value = e.target.value;
@@ -71,6 +74,7 @@ export class TextAreaFieldEditor extends MobxLitElement {
             <br />
             <vaadin-text-area
               label="Placeholder"
+              class="width-full"
               .value=${this.field.attributes.placeholder}
               @value-changed=${action((e: TextAreaChangeEvent) => {
                 this.field.attributes.placeholder = e.target.value;
@@ -82,7 +86,7 @@ export class TextAreaFieldEditor extends MobxLitElement {
           <div class="preview-title">
             <span>${this.field.attributes.label}</span>
             ${this.field.validations.required
-              ? html`<span class="preview-title-required-indicator">*</span>`
+              ? html`<span class="preview-required-indicator">*</span>`
               : null}
           </div>
           ${this.field.attributes.description
@@ -92,6 +96,7 @@ export class TextAreaFieldEditor extends MobxLitElement {
             : null}
           <div>
             <vaadin-text-area
+              class="width-full"
               .value=${this.field.attributes.value}
               .placeholder=${this.field.attributes.placeholder}
             ></vaadin-text-area>

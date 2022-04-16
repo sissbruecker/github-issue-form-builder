@@ -4,6 +4,7 @@ import { makeAutoObservable } from 'mobx';
 export enum FieldType {
   Markdown = 'markdown',
   TextArea = 'textarea',
+  Checkboxes = 'checkboxes',
 }
 
 export interface Field {
@@ -32,6 +33,20 @@ export interface TextAreaField extends Field {
 
   validations: {
     required: boolean;
+  };
+}
+
+export interface CheckboxOption {
+  label: string;
+  required: boolean;
+}
+
+export interface CheckboxesField extends Field {
+  type: FieldType.Checkboxes;
+  attributes: {
+    label: string;
+    description: string;
+    options: CheckboxOption[];
   };
 }
 
@@ -76,6 +91,19 @@ export function createField(configuration: Configuration, type: FieldType) {
         validations: { required: false },
       });
       return textAreaField;
+    }
+    case FieldType.Checkboxes: {
+      const checkboxesField: CheckboxesField = makeAutoObservable({
+        id: getNextFieldId(configuration),
+        type: FieldType.Checkboxes,
+        attributes: {
+          label: 'Checkboxes',
+          description: '',
+          options: [],
+        },
+        validations: { required: false },
+      });
+      return checkboxesField;
     }
     default:
       throw new Error(`Unexpected field type: ${type}`);

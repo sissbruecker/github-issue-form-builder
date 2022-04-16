@@ -75,6 +75,8 @@
       "import/no-duplicates": "off",
       "import/no-extraneous-dependencies": "off",
       "max-classes-per-file": "off",
+      "class-methods-use-this": "off",
+      "no-param-reassign": "off",
       "@typescript-eslint/no-unused-vars": [
         "error"
       ],

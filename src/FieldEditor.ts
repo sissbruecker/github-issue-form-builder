@@ -7,8 +7,7 @@ export interface FieldEditorEvent extends CustomEvent<{ field: Field }> {}
 
 // Reusable styles for all field editors
 export const fieldEditorStyles = css`
-  vaadin-text-area,
-  vaadin-text-field {
+  .width-full {
     width: 100%;
   }
 
@@ -17,7 +16,7 @@ export const fieldEditorStyles = css`
     font-weight: bold;
   }
 
-  .preview-title-required-indicator {
+  .preview-required-indicator {
     color: var(--lumo-error-text-color);
   }
 
