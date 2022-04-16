@@ -3,6 +3,7 @@ import { makeAutoObservable } from 'mobx';
 // eslint-disable-next-line no-shadow
 export enum FieldType {
   Markdown = 'markdown',
+  Input = 'input',
   TextArea = 'textarea',
   Checkboxes = 'checkboxes',
 }
@@ -18,6 +19,21 @@ export interface MarkdownField extends Field {
 
   attributes: {
     value: string;
+  };
+}
+
+export interface InputField extends Field {
+  type: FieldType.Input;
+
+  attributes: {
+    label: string;
+    description: string;
+    value: string;
+    placeholder: string;
+  };
+
+  validations: {
+    required: boolean;
   };
 }
 
@@ -77,6 +93,20 @@ export function createField(configuration: Configuration, type: FieldType) {
         },
       });
       return markdownField;
+    }
+    case FieldType.Input: {
+      const inputField: InputField = makeAutoObservable({
+        id: getNextFieldId(configuration),
+        type: FieldType.Input,
+        attributes: {
+          label: 'Input',
+          description: '',
+          value: '',
+          placeholder: '',
+        },
+        validations: { required: false },
+      });
+      return inputField;
     }
     case FieldType.TextArea: {
       const textAreaField: TextAreaField = makeAutoObservable({

@@ -1,6 +1,8 @@
 import { css, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
+import '@vaadin/button';
+import '@vaadin/icon';
 import { Field } from './model.js';
 
 export interface FieldEditorEvent extends CustomEvent<{ field: Field }> {}

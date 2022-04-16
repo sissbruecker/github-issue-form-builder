@@ -13,11 +13,13 @@ import {
   createField,
   Field,
   FieldType,
+  InputField,
   MarkdownField,
   TextAreaField,
 } from './model.js';
 import { loadLastConfiguration, saveLastConfiguration } from './storage.js';
 import './MarkdownFieldEditor.js';
+import './InputFieldEditor.js';
 import './TextAreaFieldEditor.js';
 import './CheckboxesFieldEditor.js';
 import { ConfirmDialog } from './components/ConfirmDialog.js';
@@ -53,7 +55,7 @@ export class Editor extends MobxLitElement {
       theme: 'primary',
       children: [
         { text: 'Markdown', type: FieldType.Markdown },
-        { text: 'Input' },
+        { text: 'Input', type: FieldType.Input },
         { text: 'Textarea', type: FieldType.TextArea },
         { text: 'Checkboxes', type: FieldType.Checkboxes },
       ],
@@ -167,6 +169,16 @@ export class Editor extends MobxLitElement {
           @field-editor-move-down=${this.onFieldEditorMoveDown}
           @field-editor-remove=${this.onFieldEditorRemove}
         ></fb-markdown-field-editor>`;
+      }
+      case FieldType.Input: {
+        const inputField = field as InputField;
+        return html`<fb-input-field-editor
+          .field=${inputField}
+          data-field-id=${field.id}
+          @field-editor-move-up=${this.onFieldEditorMoveUp}
+          @field-editor-move-down=${this.onFieldEditorMoveDown}
+          @field-editor-remove=${this.onFieldEditorRemove}
+        ></fb-input-field-editor>`;
       }
       case FieldType.TextArea: {
         const textAreaField = field as TextAreaField;
