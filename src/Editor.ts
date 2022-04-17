@@ -24,6 +24,7 @@ import './TextAreaFieldEditor.js';
 import './CheckboxesFieldEditor.js';
 import { ConfirmDialog } from './components/ConfirmDialog.js';
 import { FieldEditorEvent } from './FieldEditor.js';
+import { TemplateDialog } from './TemplateDialog.js';
 
 interface FieldMenuItem extends MenuBarItem {
   type: FieldType;
@@ -37,11 +38,21 @@ export class Editor extends MobxLitElement {
     }
 
     .toolbar {
+      display: flex;
+      align-items: baseline;
       padding: var(--lumo-space-s);
       margin-bottom: var(--lumo-space-l);
       border-radius: var(--lumo-border-radius-l);
       background: var(--lumo-base-color);
       box-shadow: var(--lumo-box-shadow-s);
+    }
+
+    .toolbar > *:not(:last-child) {
+      margin-right: var(--lumo-space-s);
+    }
+
+    .toolbar > *:last-child {
+      margin-left: auto;
     }
 
     .fields > *:not(:last-child) {
@@ -101,6 +112,10 @@ export class Editor extends MobxLitElement {
     });
   }
 
+  onCreateTemplate() {
+    TemplateDialog.show(this.configuration);
+  }
+
   onFieldEditorMoveUp(e: FieldEditorEvent) {
     const index = this.configuration.fields.indexOf(e.detail.field);
     if (index < 1) return;
@@ -147,6 +162,9 @@ export class Editor extends MobxLitElement {
           @item-selected=${this.onAddField}
         ></vaadin-menu-bar>
         <vaadin-button @click=${this.onReset}>Reset</vaadin-button>
+        <vaadin-button theme="primary success" @click=${this.onCreateTemplate}
+          >Create template</vaadin-button
+        >
       </div>
       <div class="fields">
         ${repeat(

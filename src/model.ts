@@ -67,6 +67,8 @@ export interface CheckboxesField extends Field {
 }
 
 export interface Configuration {
+  name: string;
+  description: string;
   fields: Field[];
 }
 
@@ -78,6 +80,8 @@ function getNextFieldId(configuration: Configuration) {
 
 export function createConfiguration(): Configuration {
   return makeAutoObservable({
+    name: '',
+    description: '',
     fields: [],
   });
 }

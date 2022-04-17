@@ -48,10 +48,9 @@ export class ConfirmDialog {
         root
       );
     };
+    dialog.opened = true;
     dialog.setAttribute('theme', 'no-padding');
     dialog.addEventListener('opened-changed', openedChangedHandler);
-
-    dialog.opened = true;
     document.body.appendChild(dialog);
   }
 }
@@ -84,7 +83,7 @@ export class ConfirmDialogContent extends LitElement {
     }
   `;
 
-  @property()
+  @property({ attribute: false })
   options!: ConfirmDialogOptions;
 
   @property()
