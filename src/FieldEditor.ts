@@ -38,6 +38,12 @@ export class FieldEditor extends MobxLitElement {
       box-shadow: var(--lumo-box-shadow-s);
     }
 
+    @media (max-width: 768px) {
+      :host {
+        flex-direction: column;
+      }
+    }
+
     .header {
       display: flex;
       align-items: baseline;

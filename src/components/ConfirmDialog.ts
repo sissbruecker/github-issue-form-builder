@@ -60,6 +60,7 @@ export class ConfirmDialogContent extends LitElement {
   static styles = css`
     :host {
       display: block;
+      max-width: 600px;
     }
 
     .content {

@@ -11,10 +11,17 @@ export class App extends LitElement {
     lumoStyles,
     css`
       :host {
-        display: block;
+        display: flex;
+        justify-content: center;
         background: var(--lumo-contrast-20pct);
         padding: var(--lumo-space-l);
         box-sizing: border-box;
+      }
+
+      .container {
+        flex: 1 1 auto;
+        min-width: 0;
+        max-width: 1280px;
       }
 
       header {
@@ -32,12 +39,14 @@ export class App extends LitElement {
 
   render() {
     return html`
-      <header>
-        <h1>Github Issue Form Builder</h1>
-      </header>
-      <main>
-        <fb-editor></fb-editor>
-      </main>
+      <div class="container">
+        <header>
+          <h1>Github Issue Form Builder</h1>
+        </header>
+        <main>
+          <fb-editor></fb-editor>
+        </main>
+      </div>
     `;
   }
 }
