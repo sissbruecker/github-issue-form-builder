@@ -80,7 +80,7 @@ function getNextFieldId(configuration: Configuration) {
 
 export function createConfiguration(): Configuration {
   return makeAutoObservable({
-    name: '',
+    name: 'Bug Report',
     description: '',
     fields: [],
   });

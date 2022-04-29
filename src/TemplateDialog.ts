@@ -50,7 +50,7 @@ export class TemplateDialogContent extends LitElement {
     .header {
       flex: 0 0 auto;
       display: flex;
-      padding: var(--lumo-space-m);
+      padding: var(--lumo-space-m) var(--lumo-space-m) 0 var(--lumo-space-m);
     }
 
     .header h2 {
@@ -68,7 +68,7 @@ export class TemplateDialogContent extends LitElement {
       min-height: 0;
       display: flex;
       flex-direction: column;
-      padding: var(--lumo-space-m);
+      padding: 0 var(--lumo-space-m) var(--lumo-space-m) var(--lumo-space-m);
     }
 
     .content pre {
@@ -111,7 +111,9 @@ export class TemplateDialogContent extends LitElement {
         <p>
           To use this template in your repository, copy the configuration below,
           and paste it into a new <code>.yaml</code> file into your
-          repositories' <code>.github/ISSUE_TEMPLATE</code> folder. See the
+          repositories' <code>.github/ISSUE_TEMPLATE</code> folder. Optionally,
+          change the template name from <code>Bug Report</code> to something
+          more appropriate. See the
           <a
             target="_blank"
             rel="noopener noreferrer"
