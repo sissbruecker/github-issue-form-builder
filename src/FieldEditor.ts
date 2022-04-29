@@ -38,12 +38,6 @@ export class FieldEditor extends MobxLitElement {
       box-shadow: var(--lumo-box-shadow-s);
     }
 
-    @media (max-width: 768px) {
-      :host {
-        flex-direction: column;
-      }
-    }
-
     .header {
       display: flex;
       align-items: baseline;
@@ -69,6 +63,17 @@ export class FieldEditor extends MobxLitElement {
       padding: var(--lumo-space-m);
       background: var(--lumo-contrast-5pct);
       border-left: solid 1px var(--lumo-contrast-5pct);
+    }
+
+    @media (max-width: 768px) {
+      :host {
+        flex-direction: column;
+      }
+
+      .preview-pane {
+        border-left: none;
+        border-top: solid 1px var(--lumo-contrast-5pct);
+      }
     }
   `;
 
