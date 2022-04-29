@@ -30,12 +30,8 @@ import { FieldEditorEvent } from './FieldEditor.js';
 import { TemplateDialog } from './TemplateDialog.js';
 import { Preset, presets } from './presets.js';
 
-interface FieldMenuItem extends MenuBarItem {
-  type: FieldType;
-}
-
-interface PresetMenuItem extends MenuBarItem {
-  preset: Preset;
+interface ToolbarMenuItem extends MenuBarItem {
+  action: () => void;
 }
 
 @customElement('fb-editor')
@@ -55,12 +51,14 @@ export class Editor extends MobxLitElement {
       box-shadow: var(--lumo-box-shadow-s);
     }
 
-    .toolbar > *:not(:last-child) {
+    .toolbar > vaadin-menu-bar {
       margin-right: var(--lumo-space-s);
+      flex: 1 1 auto;
+      min-width: 0;
     }
 
     .toolbar > *:last-child {
-      margin-left: auto;
+      flex: 0 0 auto;
     }
 
     .fields > *:not(:last-child) {
@@ -73,21 +71,25 @@ export class Editor extends MobxLitElement {
       text: 'Add Field',
       theme: 'primary',
       children: [
-        { text: 'Markdown', type: FieldType.Markdown },
-        { text: 'Input', type: FieldType.Input },
-        { text: 'Textarea', type: FieldType.TextArea },
-        { text: 'Checkboxes', type: FieldType.Checkboxes },
-      ] as FieldMenuItem[],
+        { text: 'Markdown', action: () => this.addField(FieldType.Markdown) },
+        { text: 'Input', action: () => this.addField(FieldType.Input) },
+        { text: 'Textarea', action: () => this.addField(FieldType.TextArea) },
+        {
+          text: 'Checkboxes',
+          action: () => this.addField(FieldType.Checkboxes),
+        },
+      ] as ToolbarMenuItem[],
     },
-  ];
-
-  presetItems = [
     {
       text: 'Load Preset',
       children: presets.map(preset => ({
         text: preset.name,
-        preset,
+        action: () => this.loadPreset(preset),
       })),
+    },
+    {
+      text: 'Reset',
+      action: () => this.reset(),
     },
   ];
 
@@ -108,16 +110,15 @@ export class Editor extends MobxLitElement {
     });
   }
 
-  onAddField(event: MenuBarItemSelectedEvent) {
+  addField(fieldType: FieldType) {
     runInAction(() => {
-      const fieldMenuitem = event.detail.value as FieldMenuItem;
-      const field = createField(this.configuration, fieldMenuitem.type);
+      const field = createField(this.configuration, fieldType);
       this.configuration.fields.push(field);
       this.scrollToField(field);
     });
   }
 
-  onReset() {
+  reset() {
     ConfirmDialog.show({
       title: 'Reset Configuration',
       message: 'Do you really want to reset the configuration?',
@@ -130,13 +131,9 @@ export class Editor extends MobxLitElement {
     });
   }
 
-  onLoadPreset(event: MenuBarItemSelectedEvent) {
-    const presetMenuItem = event.detail.value as PresetMenuItem;
-
+  loadPreset(preset: Preset) {
     const loadPreset = () => {
-      this.configuration = cloneConfiguration(
-        presetMenuItem.preset.configuration
-      );
+      this.configuration = cloneConfiguration(preset.configuration);
       saveLastConfiguration(this.configuration);
     };
 
@@ -199,16 +196,12 @@ export class Editor extends MobxLitElement {
     return html`
       <div class="toolbar">
         <vaadin-menu-bar
-          class="dropdown"
           .items=${this.toolbarItems}
-          @item-selected=${this.onAddField}
+          @item-selected=${(event: MenuBarItemSelectedEvent) => {
+            const item = event.detail.value as ToolbarMenuItem;
+            item.action();
+          }}
         ></vaadin-menu-bar>
-        <vaadin-menu-bar
-          class="dropdown"
-          .items=${this.presetItems}
-          @item-selected=${this.onLoadPreset}
-        ></vaadin-menu-bar>
-        <vaadin-button @click=${this.onReset}>Reset</vaadin-button>
         <vaadin-button theme="primary success" @click=${this.onCreateTemplate}
           >Create template</vaadin-button
         >
