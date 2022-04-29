@@ -71,12 +71,25 @@ export class TemplateDialogContent extends LitElement {
       padding: 0 var(--lumo-space-m) var(--lumo-space-m) var(--lumo-space-m);
     }
 
-    .content pre {
+    .template {
+      position: relative;
       flex: 1 1 auto;
-      padding: var(--lumo-space-s);
+      min-height: 0;
+      padding: var(--lumo-space-m);
       background-color: var(--lumo-contrast-10pct);
       border-radius: var(--lumo-border-radius-l);
+    }
+
+    .template pre {
+      height: 100%;
+      margin: 0;
       overflow-y: auto;
+    }
+
+    .template .copy {
+      position: absolute;
+      top: var(--lumo-space-s);
+      right: var(--lumo-space-m);
     }
   `;
 
@@ -93,6 +106,10 @@ export class TemplateDialogContent extends LitElement {
     autorun(() => {
       this.configurationYaml = yaml(this.configuration);
     });
+  }
+
+  onCopy() {
+    navigator.clipboard.writeText(this.configurationYaml);
   }
 
   render() {
@@ -122,7 +139,12 @@ export class TemplateDialogContent extends LitElement {
           >
           for more information.
         </p>
-        <pre><code>${this.configurationYaml}</code></pre>
+        <div class="template">
+          <pre><code>${this.configurationYaml}</code></pre>
+          <vaadin-button class="copy" theme="tertiary" @click="${this.onCopy}"
+            >Copy</vaadin-button
+          >
+        </div>
       </div>
     `;
   }
