@@ -86,6 +86,13 @@ export function createConfiguration(): Configuration {
   });
 }
 
+export function cloneConfiguration(
+  configuration: Configuration
+): Configuration {
+  const clone = JSON.parse(JSON.stringify(configuration));
+  return makeAutoObservable(clone);
+}
+
 export function createField(configuration: Configuration, type: FieldType) {
   switch (type) {
     case FieldType.Markdown: {

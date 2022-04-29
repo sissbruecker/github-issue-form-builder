@@ -9,6 +9,7 @@ import { Notification } from '@vaadin/notification';
 import '@vaadin/button';
 import {
   CheckboxesField,
+  cloneConfiguration,
   createConfiguration,
   createField,
   Field,
@@ -25,9 +26,14 @@ import './CheckboxesFieldEditor.js';
 import { ConfirmDialog } from './components/ConfirmDialog.js';
 import { FieldEditorEvent } from './FieldEditor.js';
 import { TemplateDialog } from './TemplateDialog.js';
+import { Preset, presets } from './presets.js';
 
 interface FieldMenuItem extends MenuBarItem {
   type: FieldType;
+}
+
+interface PresetMenuItem extends MenuBarItem {
+  preset: Preset;
 }
 
 @customElement('fb-editor')
@@ -69,7 +75,17 @@ export class Editor extends MobxLitElement {
         { text: 'Input', type: FieldType.Input },
         { text: 'Textarea', type: FieldType.TextArea },
         { text: 'Checkboxes', type: FieldType.Checkboxes },
-      ],
+      ] as FieldMenuItem[],
+    },
+  ];
+
+  presetItems = [
+    {
+      text: 'Load Preset',
+      children: presets.map(preset => ({
+        text: preset.name,
+        preset,
+      })),
     },
   ];
 
@@ -110,6 +126,30 @@ export class Editor extends MobxLitElement {
         saveLastConfiguration(this.configuration);
       },
     });
+  }
+
+  onLoadPreset(event: MenuBarItemSelectedEvent) {
+    const presetMenuItem = event.detail.value as PresetMenuItem;
+
+    const loadPreset = () => {
+      this.configuration = cloneConfiguration(
+        presetMenuItem.preset.configuration
+      );
+      saveLastConfiguration(this.configuration);
+    };
+
+    if (this.configuration.fields.length === 0) {
+      loadPreset();
+    } else {
+      ConfirmDialog.show({
+        title: 'Load Preset',
+        message:
+          'Loading a preset configuration will remove your existing configuration. Are you sure you want to go ahead?',
+        confirmButtonTheme: 'primary error',
+        cancelButtonTheme: 'tertiary',
+        onConfirm: loadPreset,
+      });
+    }
   }
 
   onCreateTemplate() {
@@ -162,6 +202,11 @@ export class Editor extends MobxLitElement {
           @item-selected=${this.onAddField}
         ></vaadin-menu-bar>
         <vaadin-button @click=${this.onReset}>Reset</vaadin-button>
+        <vaadin-menu-bar
+          class="dropdown"
+          .items=${this.presetItems}
+          @item-selected=${this.onLoadPreset}
+        ></vaadin-menu-bar>
         <vaadin-button theme="primary success" @click=${this.onCreateTemplate}
           >Create template</vaadin-button
         >
