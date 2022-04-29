@@ -17,7 +17,7 @@ export const presets: Preset[] = [
           type: FieldType.TextArea,
           attributes: {
             label: 'Description',
-            description: 'Give a consise description of the problem',
+            description: 'Give a concise description of the problem',
             value: '',
             placeholder: '',
           },

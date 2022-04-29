@@ -93,6 +93,10 @@ export function cloneConfiguration(
   return makeAutoObservable(clone);
 }
 
+export function isConfigurationEmpty(configuration: Configuration) {
+  return configuration.fields.length === 0;
+}
+
 export function createField(configuration: Configuration, type: FieldType) {
   switch (type) {
     case FieldType.Markdown: {

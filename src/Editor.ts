@@ -15,10 +15,12 @@ import {
   Field,
   FieldType,
   InputField,
+  isConfigurationEmpty,
   MarkdownField,
   TextAreaField,
 } from './model.js';
 import { loadLastConfiguration, saveLastConfiguration } from './storage.js';
+import './HelpText.js';
 import './MarkdownFieldEditor.js';
 import './InputFieldEditor.js';
 import './TextAreaFieldEditor.js';
@@ -68,7 +70,7 @@ export class Editor extends MobxLitElement {
 
   toolbarItems = [
     {
-      text: 'Add',
+      text: 'Add Field',
       theme: 'primary',
       children: [
         { text: 'Markdown', type: FieldType.Markdown },
@@ -138,13 +140,13 @@ export class Editor extends MobxLitElement {
       saveLastConfiguration(this.configuration);
     };
 
-    if (this.configuration.fields.length === 0) {
+    if (isConfigurationEmpty(this.configuration)) {
       loadPreset();
     } else {
       ConfirmDialog.show({
         title: 'Load Preset',
         message:
-          'Loading a preset configuration will remove your existing configuration. Are you sure you want to go ahead?',
+          'Loading a preset will remove your existing configuration. Are you sure you want to continue?',
         confirmButtonTheme: 'primary error',
         cancelButtonTheme: 'tertiary',
         onConfirm: loadPreset,
@@ -201,23 +203,27 @@ export class Editor extends MobxLitElement {
           .items=${this.toolbarItems}
           @item-selected=${this.onAddField}
         ></vaadin-menu-bar>
-        <vaadin-button @click=${this.onReset}>Reset</vaadin-button>
         <vaadin-menu-bar
           class="dropdown"
           .items=${this.presetItems}
           @item-selected=${this.onLoadPreset}
         ></vaadin-menu-bar>
+        <vaadin-button @click=${this.onReset}>Reset</vaadin-button>
         <vaadin-button theme="primary success" @click=${this.onCreateTemplate}
           >Create template</vaadin-button
         >
       </div>
-      <div class="fields">
-        ${repeat(
-          this.configuration.fields,
-          field => field.id,
-          field => this.renderField(field)
-        )}
-      </div>
+      ${isConfigurationEmpty(this.configuration)
+        ? html`<fb-help-text></fb-help-text>`
+        : html`
+            <div class="fields">
+              ${repeat(
+                this.configuration.fields,
+                field => field.id,
+                field => this.renderField(field)
+              )}
+            </div>
+          `}
     `;
   }
 
