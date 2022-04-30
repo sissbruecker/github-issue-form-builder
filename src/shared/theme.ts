@@ -1,5 +1,8 @@
 import { css } from 'lit';
 import { registerStyles } from '@vaadin/vaadin-themable-mixin/register-styles';
+import { typography, color, spacing, badge } from '@vaadin/vaadin-lumo-styles';
+
+export const lumoTheme = [typography, color, spacing, badge];
 
 registerStyles(
   'vaadin-details',

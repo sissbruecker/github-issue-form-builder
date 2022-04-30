@@ -18,17 +18,20 @@ import {
   isConfigurationEmpty,
   MarkdownField,
   TextAreaField,
-} from './model.js';
-import { loadLastConfiguration, saveLastConfiguration } from './storage.js';
+} from './shared/model.js';
+import {
+  loadLastConfiguration,
+  saveLastConfiguration,
+} from './shared/storage.js';
 import './HelpText.js';
 import './MarkdownFieldEditor.js';
 import './InputFieldEditor.js';
 import './TextAreaFieldEditor.js';
 import './CheckboxesFieldEditor.js';
-import { ConfirmDialog } from './components/ConfirmDialog.js';
+import { ConfirmDialog } from './ConfirmDialog.js';
 import { FieldEditorEvent } from './FieldEditor.js';
 import { TemplateDialog } from './TemplateDialog.js';
-import { Preset, presets } from './presets.js';
+import { Preset, presets } from './shared/presets.js';
 
 interface ToolbarMenuItem extends MenuBarItem {
   action: () => void;

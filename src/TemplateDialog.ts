@@ -1,11 +1,11 @@
 import { css, html, LitElement, render } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { autorun } from 'mobx';
-import { Configuration } from './model.js';
+import { Configuration } from './shared/model.js';
 import '@vaadin/button';
 import '@vaadin/dialog';
 import '@vaadin/icon';
-import { yaml } from './yaml.js';
+import { yaml } from './shared/yaml.js';
 
 export class TemplateDialog {
   static show(configuration: Configuration) {

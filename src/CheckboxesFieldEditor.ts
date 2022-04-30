@@ -9,7 +9,7 @@ import { CheckboxCheckedChangedEvent } from '@vaadin/checkbox';
 import { action, makeAutoObservable, runInAction } from 'mobx';
 import '@vaadin/text-field';
 import { TextFieldValueChangedEvent } from '@vaadin/text-field';
-import { CheckboxesField, CheckboxOption } from './model.js';
+import { CheckboxesField, CheckboxOption } from './shared/model.js';
 import './FieldEditor.js';
 import { fieldEditorStyles } from './FieldEditor.js';
 

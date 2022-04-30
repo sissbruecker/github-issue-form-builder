@@ -11,7 +11,7 @@ import '@vaadin/text-field';
 import { TextFieldValueChangedEvent } from '@vaadin/text-field';
 import { TextAreaChangeEvent } from '@vaadin/text-area';
 import '@vaadin/details';
-import { TextAreaField } from './model.js';
+import { TextAreaField } from './shared/model.js';
 import './FieldEditor.js';
 import { fieldEditorStyles } from './FieldEditor.js';
 

@@ -7,7 +7,7 @@ import { action } from 'mobx';
 import '@vaadin/text-field';
 import { TextFieldValueChangedEvent } from '@vaadin/text-field';
 import '@vaadin/details';
-import { InputField } from './model.js';
+import { InputField } from './shared/model.js';
 import './FieldEditor.js';
 import { fieldEditorStyles } from './FieldEditor.js';
 

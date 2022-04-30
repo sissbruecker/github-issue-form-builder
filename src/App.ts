@@ -1,14 +1,13 @@
 import './setup-env.js';
 import { LitElement, html, css } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
+import { lumoTheme } from './shared/theme.js';
 import './Editor.js';
-import { lumoStyles } from './lumo.js';
-import './theme.js';
 
 @customElement('fb-app')
 export class App extends LitElement {
   static styles = [
-    lumoStyles,
+    lumoTheme,
     css`
       :host {
         display: flex;

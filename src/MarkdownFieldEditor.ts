@@ -5,7 +5,7 @@ import '@vaadin/text-area';
 import { TextAreaChangeEvent } from '@vaadin/text-area';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { action } from 'mobx';
-import { MarkdownField } from './model.js';
+import { MarkdownField } from './shared/model.js';
 import './FieldEditor.js';
 import { fieldEditorStyles } from './FieldEditor.js';
 
