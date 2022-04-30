@@ -1,4 +1,4 @@
-import './setup-env.js';
+import './shared/setup-env.js';
 import { LitElement, html, css } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { lumoTheme } from './shared/theme.js';
