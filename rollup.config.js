@@ -1,5 +1,6 @@
 import nodeResolve from '@rollup/plugin-node-resolve';
 import babel from '@rollup/plugin-babel';
+import replace from '@rollup/plugin-replace';
 import html from '@web/rollup-plugin-html';
 import { importMetaAssets } from '@web/rollup-plugin-import-meta-assets';
 import { terser } from 'rollup-plugin-terser';
@@ -19,6 +20,13 @@ export default {
     /** Enable using HTML as rollup entrypoint */
     html({
       minify: true,
+    }),
+    /** Set NODE_ENV to production for MobX */
+    replace({
+      values: {
+        'process.env.NODE_ENV': JSON.stringify('production'),
+      },
+      preventAssignment: true,
     }),
     /** Resolve bare module imports */
     nodeResolve(),
